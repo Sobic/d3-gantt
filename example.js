@@ -26,39 +26,34 @@ let gantt = d3.gantt()
 changeTimeDomain(timeDomainString)
 gantt(tasks)
 
-function changeTimeDomain(timeDomainString) {
-  this.timeDomainString = timeDomainString
+function changeTimeDomain(timeDomain) {
+  this.timeDomainString = timeDomain
+  let startDate
   let endDate = getEndDate()
 
-  switch (timeDomainString) {
+  switch (timeDomain) {
     case '1hr':
-      format = "%H:%M:%S"
-      gantt.timeDomain([ d3.timeHour.offset(endDate, -1), endDate ])
-      break;
-
-    case "3hr":
-      format = "%H:%M"
-      gantt.timeDomain([ d3.timeHour.offset(endDate, -3), endDate ])
+      format = '%H:%M:%S'
+      startDate = d3.timeHour.offset(endDate, -1)
       break
-
-    case "6hr":
-      format = "%H:%M"
-      gantt.timeDomain([ d3.timeHour.offset(endDate, -6), endDate ])
+    case '3hr':
+      format = '%H:%M'
+      startDate = d3.timeHour.offset(endDate, -3)
       break
-
-    case "1day":
-      format = "%H:%M"
-      gantt.timeDomain([ d3.timeDay.offset(endDate, -1), endDate ])
+    case '6hr':
+      format = '%H:%M'
+      startDate = d3.timeHour.offset(endDate, -6)
       break
-
-    case "1week":
-      format = "%a %H:%M"
-      gantt.timeDomain([ d3.timeDay.offset(endDate, -7), endDate ])
+    case '1week':
+      format = '%a %H:%M'
+      startDate = d3.timeDay.offset(endDate, -7)
       break
-
     default:
-      format = "%H:%M"
+      format = '%H:%M'
+      startDate = d3.timeDay.offset(endDate, -1)
   }
+
+  gantt.timeDomain([ startDate, endDate])
   gantt.tickFormat(format)
   gantt.redraw(tasks)
 }

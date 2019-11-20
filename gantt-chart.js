@@ -13,7 +13,7 @@ d3.gantt = function() {
   let taskTypes = []
   let taskStatus = []
   let x, y, xAxis, yAxis
-  let tickFormat = "%H:%M"
+  let tickFormat = '%H:%M'
 
   let keyFunction = (d) => d.startDate + d.taskName + d.endDate
   let rectTransform = (d) => 'translate(' + x(d.startDate) + ',' + y(d.taskName) + ')'
@@ -27,7 +27,7 @@ d3.gantt = function() {
     y = d3.scaleBand()
       .domain(taskTypes)
       .range([ 0, height - margin.top - margin.bottom ])
-      .padding(0.1)
+      .padding(0.5)
 
     xAxis = d3.axisBottom()
       .scale(x)
